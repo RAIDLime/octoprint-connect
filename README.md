@@ -20,6 +20,7 @@ This script detects printer status and will reconnect a disconnected printer if 
 Requires curl.
 
 Usage:
+
 `# bash octoprint-connect.sh {instance-ip} {api-key} [override]`
 
 Include the port number in the IP address if required (e.g. for octoprint-deploy instances - "x.x.x.x:5000")
@@ -45,7 +46,7 @@ Don't sue me please.
 										       
 ------------------------
 
---- INSTRUCTIONS ---
+INSTRUCTIONS
 ---------------------------------------------
 
 Get an Application Key
@@ -62,11 +63,10 @@ Install the Script
 
 Put this script somewhere where you can find it (e.g. your home directory), and make it executable:
 
-# chmod +x octoprint-connect.sh
+`# chmod +x octoprint-connect.sh`
 
 If you do not intend on setting this script up to be automated with cron, you're done and the script is ready to use.
 
-------------------------
 Using the Script
 ------------------------
 
@@ -74,7 +74,7 @@ Run the script and insert the IP address of your OctoPrint instance (including p
 
 Example:
 
-# bash octoprint-connect.sh 192.168.1.99:5000 B1gL0n6Ap1k3Yg03sh3r3
+`# bash octoprint-connect.sh 192.168.1.99:5000 B1gL0n6Ap1k3Yg03sh3r3`
 
 Running this will run some checks and trigger one of the following outcomes:
 - If OctoPrint is unreachable, it tells you with a reason code.
@@ -85,7 +85,6 @@ Running this will run some checks and trigger one of the following outcomes:
       - If an error is present, it will tell you the error it found and do nothing else.
       - If no error is present, or if there is an error and you included "override" at the end of your command, the script will send a connection command to OctoPrint then report back on connection status. All preferred port/speed settings are assumed. 
       
-------------------------
 Automating for auto-connections
 ------------------------
 
@@ -93,23 +92,27 @@ Create another file in the same location as the script named "octo-apis". In thi
 
 Example:
 
-192.168.1.99:5000,B1gL0n6Ap1k3Yg03sh3r3
+`192.168.1.99:5000,B1gL0n6Ap1k3Yg03sh3r3`
 
 If you have multiple printers and OctoPrint instances, create separate lines for each.
 
 Example:
 
+```
 192.168.1.99:5000,B1gL0n6Ap1k3Yg03sh3r3
 192.168.1.99:5001,an0th3rB1gL0n6Ap1k3Y1
 192.168.1.99:5002,y37an0th3rB1gL0n6Ap1k
+```
 
 With this set up, we now need to create a new cron job. Launch the cron editor with:
 
-# crontab -e
+`# crontab -e`
 
 Insert the following into crontab (the whole thing is one line), updating the full paths to your script and octo-apis file:
 
+```
 * * * * * for i in `cat /path/to/octo-apis`; do ip=$(echo $i | awk -F, '{print $1}'); api=$(echo $i | awk -F, '{print $2}'); bash /path/to/octoprint-connect.sh $ip $api > /dev/null; done
+```
 
 As written, every minute, this job will run this script against the printers in the octo-apis file, automatically establishing a connection to printers you have just powered on.
 
