@@ -1,7 +1,6 @@
 Octoprint Printer Connection Script
 Written by RAIDLime, Dec 2024
 
-------------------------
 Problem
 ------------------------
 
@@ -11,7 +10,6 @@ I now have a single Raspberry Pi 4/4GB with 3 instances of Octoprint running on 
 
 That said, my printers are always in various states of use; sometimes they are printing, sometimes they sit idle, or sometimes some of them are powered off for one reason or another. This led to a sort of "first world problem" where when I now power on a printer, I have to open up its Octoprint instance and connect it to the printer before I can start any jobs, adding an extra step for me to make a printer ready.
 
-------------------------
 Solution
 ------------------------
 
@@ -22,7 +20,7 @@ This script detects printer status and will reconnect a disconnected printer if 
 Requires curl.
 
 Usage:
-# bash octoprint-connect.sh {instance-ip} {api-key} [override]
+`# bash octoprint-connect.sh {instance-ip} {api-key} [override]`
 
 Include the port number in the IP address if required (e.g. for octoprint-deploy instances - "x.x.x.x:5000")
 
@@ -30,7 +28,7 @@ The script will NOT work if the printer was brought offline due to an error (e.g
 
 Include "override" at the end of the command if you want to establish a connection anyways (e.g. if you fixed the error and want to force this script to establish the connection).
 
-########################################################################################
+------------------------
 
 Disclaimer: 									       
 										       
@@ -45,22 +43,20 @@ The script author takes no responsibility for any damages, incidental or otherwi
 										       
 Don't sue me please.								       
 										       
-########################################################################################
+------------------------
 
----------------------------------------------
 --- INSTRUCTIONS ---
 ---------------------------------------------
 
-------------------------
 Get an Application Key
 ------------------------
 
 First, create a new Application Key in OctoPrint for this script:
+
    Settings / Application Keys / Manually generate an application key
 
 Name it whatever you'd like, then click "Generate". Record the long alphanumeric API key displayed in the resulting window.
 
-------------------------
 Install the Script
 ------------------------
 
